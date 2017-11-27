@@ -9,6 +9,7 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private UserStatus userStatus;
+	private UserType userType;
 
 	public User () {}
 
@@ -25,6 +26,16 @@ public class User {
 
 	public void setUserStatus (UserStatus userStatus) {
 		this.userStatus = userStatus;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "user_type_id")
+	public UserType getUserType () {
+		return userType;
+	}
+
+	public void setUserType (UserType userType) {
+		this.userType = userType;
 	}
 
 	@Id

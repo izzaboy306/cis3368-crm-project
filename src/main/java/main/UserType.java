@@ -4,15 +4,13 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "user_status", schema = "public", catalog = "salesfarce")
-public class UserStatus {
-	private int userStatusId;
+@Table(name = "user_type", schema = "public", catalog = "salesfarce")
+public class UserType {
+	private int userTypeId;
 	private String title;
 	private Set<User> users;
 
-	public UserStatus () {}
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "userStatus", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "userType", cascade = CascadeType.ALL)
 	public Set<User> getUsers () {
 		return users;
 	}
@@ -22,14 +20,13 @@ public class UserStatus {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_status_id", nullable = false)
-	public int getUserStatusId () {
-		return userStatusId;
+	@Column(name = "user_type_id", nullable = false)
+	public int getUserTypeId () {
+		return userTypeId;
 	}
 
-	public void setUserStatusId (int userStatusId) {
-		this.userStatusId = userStatusId;
+	public void setUserTypeId (int userTypeId) {
+		this.userTypeId = userTypeId;
 	}
 
 	@Basic
@@ -47,17 +44,17 @@ public class UserStatus {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		UserStatus that = (UserStatus) o;
+		UserType userType = (UserType) o;
 
-		if (userStatusId != that.userStatusId) return false;
-		if (title != null ? !title.equals(that.title) : that.title != null) return false;
+		if (userTypeId != userType.userTypeId) return false;
+		if (title != null ? !title.equals(userType.title) : userType.title != null) return false;
 
 		return true;
 	}
 
 	@Override
 	public int hashCode () {
-		int result = userStatusId;
+		int result = userTypeId;
 		result = 31 * result + (title != null ? title.hashCode() : 0);
 		return result;
 	}

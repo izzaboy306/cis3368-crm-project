@@ -4,6 +4,17 @@
     <persistence-unit name="NewPersistenceUnit">
         <class>main.User</class>
         <class>main.UserStatus</class>
+        <class>main.Country</class>
+        <class>main.Order</class>
+        <class>main.OrderLine</class>
+        <class>main.OrderNote</class>
+        <class>main.OrderStatus</class>
+        <class>main.OrderType</class>
+        <class>main.Product</class>
+        <class>main.ProductStatus</class>
+        <class>main.ProductType</class>
+        <class>main.State</class>
+        <class>main.UserType</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/salesfarce"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

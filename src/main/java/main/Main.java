@@ -13,7 +13,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class Main extends Application {
 
 	private Parent root;
-	private ConfigurableApplicationContext springContext;
 
 	public static void main(String[] args) {
 		launch();
@@ -39,7 +38,7 @@ public class Main extends Application {
 	@Override
 	public void init() throws Exception {
 		// get the springcontext
-		springContext = SpringApplication.run(Main.class);
+		ConfigurableApplicationContext springContext = SpringApplication.run(Main.class);
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
 
 		// this tells JavaFX to use the spring factory to create the controller(s)

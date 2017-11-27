@@ -40,21 +40,18 @@ public class MainController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		User user = new User();
-		user.setFirstName("John");
-		user.setLastName("Brown");
-		userRepository.save(user);
 	}
 
 	public void doPrintCustomers(ActionEvent actionEvent) {
 		Iterable<User> c = userRepository.findAll();
+		System.out.println("Customer List:");
 		c.forEach(System.out::println);
 	}
 
 	public void doAddCustomer(ActionEvent actionEvent) {
 		String firstName = txtFirstName.getText();
 		String lastName = txtLastName.getText();
-		User customer = new User(firstName, lastName);
-		userRepository.save(customer);
+		User user = new User(firstName, lastName);
+		userRepository.save(user);
 	}
 }
