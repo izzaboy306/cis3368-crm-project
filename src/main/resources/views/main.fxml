@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
+<AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.MainController">
     <children>
         <Button fx:id="btnPrintCustomers" layoutX="376.0" layoutY="67.0" mnemonicParsing="false" onAction="#doPrintCustomers" text="Print Customer Info" />
         <Button fx:id="btnAddCustomer" layoutX="150.0" layoutY="148.0" mnemonicParsing="false" onAction="#doAddCustomer" text="Add Customer" />

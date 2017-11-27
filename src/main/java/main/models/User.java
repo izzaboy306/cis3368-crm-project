@@ -1,4 +1,4 @@
-package main;
+package main.models;
 
 import javax.persistence.*;
 
@@ -13,7 +13,7 @@ public class User {
 
 	public User () {}
 
-	User (String firstName, String lastName) {
+	public User (String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}

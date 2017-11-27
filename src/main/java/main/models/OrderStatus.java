@@ -1,16 +1,16 @@
-package main;
+package main.models;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "order_type", schema = "public", catalog = "salesfarce")
-public class OrderType {
-	private int orderTypeId;
+@Table(name = "order_status", schema = "public", catalog = "salesfarce")
+public class OrderStatus {
+	private int orderStatusId;
 	private String title;
 	private Set<Order> orders;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "orderType", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "orderStatus", cascade = CascadeType.ALL)
 	public Set<Order> getOrders () {
 		return orders;
 	}
@@ -20,13 +20,13 @@ public class OrderType {
 	}
 
 	@Id
-	@Column(name = "order_type_id", nullable = false)
-	public int getOrderTypeId () {
-		return orderTypeId;
+	@Column(name = "order_status_id", nullable = false)
+	public int getOrderStatusId () {
+		return orderStatusId;
 	}
 
-	public void setOrderTypeId (int orderTypeId) {
-		this.orderTypeId = orderTypeId;
+	public void setOrderStatusId (int orderStatusId) {
+		this.orderStatusId = orderStatusId;
 	}
 
 	@Basic
@@ -44,17 +44,17 @@ public class OrderType {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		OrderType orderType = (OrderType) o;
+		OrderStatus that = (OrderStatus) o;
 
-		if (orderTypeId != orderType.orderTypeId) return false;
-		if (title != null ? !title.equals(orderType.title) : orderType.title != null) return false;
+		if (orderStatusId != that.orderStatusId) return false;
+		if (title != null ? !title.equals(that.title) : that.title != null) return false;
 
 		return true;
 	}
 
 	@Override
 	public int hashCode () {
-		int result = orderTypeId;
+		int result = orderStatusId;
 		result = 31 * result + (title != null ? title.hashCode() : 0);
 		return result;
 	}

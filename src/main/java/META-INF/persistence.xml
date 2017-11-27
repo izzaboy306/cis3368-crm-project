@@ -2,19 +2,19 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
     <persistence-unit name="NewPersistenceUnit">
-        <class>main.User</class>
-        <class>main.UserStatus</class>
-        <class>main.Country</class>
-        <class>main.Order</class>
-        <class>main.OrderLine</class>
-        <class>main.OrderNote</class>
-        <class>main.OrderStatus</class>
-        <class>main.OrderType</class>
-        <class>main.Product</class>
-        <class>main.ProductStatus</class>
-        <class>main.ProductType</class>
-        <class>main.State</class>
-        <class>main.UserType</class>
+        <class>main.models.User</class>
+        <class>main.models.UserStatus</class>
+        <class>main.models.Country</class>
+        <class>main.models.Order</class>
+        <class>main.models.OrderLine</class>
+        <class>main.models.OrderNote</class>
+        <class>main.models.OrderStatus</class>
+        <class>main.models.OrderType</class>
+        <class>main.models.Product</class>
+        <class>main.models.ProductStatus</class>
+        <class>main.models.ProductType</class>
+        <class>main.models.State</class>
+        <class>main.models.UserType</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/salesfarce"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

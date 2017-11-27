@@ -39,7 +39,7 @@ public class Main extends Application {
 	public void init() throws Exception {
 		// get the springcontext
 		ConfigurableApplicationContext springContext = SpringApplication.run(Main.class);
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../resources/views/main.fxml"));
 
 		// this tells JavaFX to use the spring factory to create the controller(s)
 		fxmlLoader.setControllerFactory(springContext::getBean);
