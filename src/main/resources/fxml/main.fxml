@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.MainController">
+    <children>
+        <Button fx:id="btnPrintCustomers" layoutX="376.0" layoutY="67.0" mnemonicParsing="false" onAction="#doPrintUsers" text="Print User Info" />
+        <Button fx:id="btnAddCustomer" layoutX="174.0" layoutY="200.0" mnemonicParsing="false" onAction="#doAddUser" text="Add User" />
+        <TextField fx:id="txtFirstName" layoutX="133.0" layoutY="67.0" />
+        <Label layoutX="45.0" layoutY="72.0" text="First Name" />
+        <Label layoutX="46.0" layoutY="115.0" text="Last Name" />
+        <TextField fx:id="txtLastName" layoutX="133.0" layoutY="110.0" />
+      <Label layoutX="45.0" layoutY="162.0" text="Status" />
+      <ComboBox fx:id="userStatusMenu" layoutX="133.0" layoutY="157.0" prefHeight="27.0" prefWidth="167.0" promptText="Set a status.." />
+      <Button fx:id="btnAddStatus" layoutX="460.0" layoutY="227.0" mnemonicParsing="false" onAction="#doAddStatus" text="Add Status" />
+      <TextField fx:id="txtStatusTitle" layoutX="419.0" layoutY="184.0" />
+      <Label layoutX="376.0" layoutY="192.0" text="Title" />
+      <Button fx:id="btnChangeScene" layoutX="247.0" layoutY="359.0" mnemonicParsing="false" onAction="#changeScene" text="Change Scene" />
+    </children>
+</AnchorPane>

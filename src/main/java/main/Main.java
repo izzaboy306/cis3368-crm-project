@@ -1,18 +1,17 @@
 package main;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.springframework.boot.SpringApplication;
+import main.view.FxmlView;
+import main.view.StageManager;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class Main extends Application {
-
-	private Parent root;
+	protected ConfigurableApplicationContext springContext;
+	protected StageManager stageManager;
 
 	public static void main(String[] args) {
 		launch();
@@ -37,14 +36,12 @@ public class Main extends Application {
 	 */
 	@Override
 	public void init() throws Exception {
-		// get the springcontext
-		ConfigurableApplicationContext springContext = SpringApplication.run(Main.class);
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../../resources/views/main.fxml"));
+		springContext = bootstrapSpringApplicationContext();
 
-		// this tells JavaFX to use the spring factory to create the controller(s)
-		fxmlLoader.setControllerFactory(springContext::getBean);
-		root = fxmlLoader.load();
-		super.init();
+//		springContext = SpringApplication.run(Main.class);
+//		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/main.fxml"));
+//		fxmlLoader.setControllerFactory(springContext::getBean);
+//		root = fxmlLoader.load();
 	}
 
 	/**
@@ -63,9 +60,40 @@ public class Main extends Application {
 	 *                     primary stages and will not be embedded in the browser.
 	 */
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("Demo of Spring JPA");
-		primaryStage.setScene(new Scene(root));
-		primaryStage.show();
+	public void start(Stage stage) throws Exception {
+		stageManager = springContext.getBean(StageManager.class, stage);
+		displayInitialScene();
+//		primaryStage.setTitle("SalesFarce");
+//		primaryStage.setScene(new Scene(root));
+//		primaryStage.show();
 	}
+
+	/**
+	 * This method is called when the application should stop, and provides a
+	 * convenient place to prepare for application exit and destroy resources.
+	 * <p>
+	 * <p>
+	 * The implementation of this method provided by the Application class does nothing.
+	 * </p>
+	 * <p>
+	 * <p>
+	 * NOTE: This method is called on the JavaFX Application Thread.
+	 * </p>
+	 */
+	@Override
+	public void stop () throws Exception {
+		springContext.stop();
+	}
+
+	protected void displayInitialScene() {
+		stageManager.switchScene(FxmlView.MAIN);
+	}
+
+	private ConfigurableApplicationContext bootstrapSpringApplicationContext() {
+		SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);
+		String[] args = getParameters().getRaw().stream().toArray(String[]::new);
+		builder.headless(false);
+		return builder.run(args);
+	}
+
 }

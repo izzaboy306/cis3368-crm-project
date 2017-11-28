@@ -12,6 +12,10 @@ public class UserStatus {
 
 	public UserStatus () {}
 
+	public UserStatus (String title) {
+		this.title = title;
+	}
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "userStatus", cascade = CascadeType.ALL)
 	public Set<User> getUsers () {
 		return users;
@@ -60,5 +64,10 @@ public class UserStatus {
 		int result = userStatusId;
 		result = 31 * result + (title != null ? title.hashCode() : 0);
 		return result;
+	}
+
+	@Override
+	public String toString () {
+		return title;
 	}
 }

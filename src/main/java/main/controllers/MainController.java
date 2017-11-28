@@ -1,36 +1,42 @@
 package main.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import main.models.User;
+import main.models.UserStatus;
 import main.repositories.UserRepository;
+import main.repositories.UserStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Component
 public class MainController implements Initializable {
+	private Parent root;
+	private ConfigurableApplicationContext springContext;
 
-	@FXML
-	private TextField txtProduct;
-
-	@FXML
-	private TextField txtAmount;
-
-	@FXML
-	private Button btnAddCustomerAndInvoice;
-	@FXML
-	private TextField txtFirstName;
-	@FXML
-	private TextField txtLastName;
+	@FXML private TextField txtFirstName;
+	@FXML private TextField txtLastName;
+	@FXML private TextField txtStatusTitle;
+	@FXML private ComboBox<String> userStatusMenu;
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private UserStatusRepository userStatusRepository;
 
 	/**
 	 * Called to initialize a controller after its root element has been
@@ -41,19 +47,42 @@ public class MainController implements Initializable {
 	 * @param resources The resources used to localize the root object, or <tt>null</tt> if
 	 */
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize (URL location, ResourceBundle resources) {
+		loadUserStatuses();
 	}
 
-	public void doPrintCustomers(ActionEvent actionEvent) {
+	public void doPrintUsers () {
+		System.out.println("User List:");
 		Iterable<User> c = userRepository.findAll();
-		System.out.println("Customer List:");
 		c.forEach(System.out::println);
+
+		System.out.println("User Status List:");
+		Iterable<UserStatus> us = userStatusRepository.findAll();
+		us.forEach(System.out::println);
 	}
 
-	public void doAddCustomer(ActionEvent actionEvent) {
-		String firstName = txtFirstName.getText();
-		String lastName = txtLastName.getText();
-		User user = new User(firstName, lastName);
-		userRepository.save(user);
+	public void doAddUser () {
+		userRepository.save(new User(txtFirstName.getText(), txtLastName.getText()));
+		txtFirstName.clear();
+		txtLastName.clear();
+	}
+
+	public void doAddStatus () {
+		userStatusRepository.save(new UserStatus((txtStatusTitle.getText())));
+		txtStatusTitle.clear();
+		loadUserStatuses();
+	}
+
+	private void loadUserStatuses() {
+		userStatusMenu.getItems().clear();
+		userStatusMenu.setItems(FXCollections.observableList(StreamSupport
+				.stream(userStatusRepository.findAll().spliterator(), true)
+				.map(UserStatus::getTitle).collect(Collectors.toList())));
+	}
+
+	public void changeScene(ActionEvent actionEvent) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/second.fxml"));
+		fxmlLoader.setControllerFactory(springContext::getBean);
+		root = fxmlLoader.load();
 	}
 }
