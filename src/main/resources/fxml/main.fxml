@@ -15,6 +15,7 @@
       <Button fx:id="btnAddStatus" layoutX="460.0" layoutY="227.0" mnemonicParsing="false" onAction="#doAddStatus" text="Add Status" />
       <TextField fx:id="txtStatusTitle" layoutX="419.0" layoutY="184.0" />
       <Label layoutX="376.0" layoutY="192.0" text="Title" />
-      <Button fx:id="btnChangeScene" layoutX="247.0" layoutY="359.0" mnemonicParsing="false" onAction="#changeScene" text="Change Scene" />
+      <Button fx:id="btnChangeToSecond" layoutX="247.0" layoutY="359.0" mnemonicParsing="false" onAction="#goToSecond" text="Second" />
+      <Button fx:id="btnChangeToThird" layoutX="325.0" layoutY="359.0" mnemonicParsing="false" onAction="#goToThird" text="Third" />
     </children>
 </AnchorPane>

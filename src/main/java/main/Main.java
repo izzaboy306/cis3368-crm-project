@@ -10,8 +10,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class Main extends Application {
-	protected ConfigurableApplicationContext springContext;
-	protected StageManager stageManager;
+	private ConfigurableApplicationContext springContext;
+	private StageManager stageManager;
 
 	public static void main(String[] args) {
 		launch();
@@ -37,11 +37,6 @@ public class Main extends Application {
 	@Override
 	public void init() throws Exception {
 		springContext = bootstrapSpringApplicationContext();
-
-//		springContext = SpringApplication.run(Main.class);
-//		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/main.fxml"));
-//		fxmlLoader.setControllerFactory(springContext::getBean);
-//		root = fxmlLoader.load();
 	}
 
 	/**
@@ -63,9 +58,6 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 		stageManager = springContext.getBean(StageManager.class, stage);
 		displayInitialScene();
-//		primaryStage.setTitle("SalesFarce");
-//		primaryStage.setScene(new Scene(root));
-//		primaryStage.show();
 	}
 
 	/**
@@ -85,7 +77,7 @@ public class Main extends Application {
 		springContext.stop();
 	}
 
-	protected void displayInitialScene() {
+	private void displayInitialScene() {
 		stageManager.switchScene(FxmlView.MAIN);
 	}
 

@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SecondController implements FxmlController {
+public class ThirdController implements FxmlController {
 	private final StageManager stageManager;
 
 	@Autowired
 	@Lazy
-	public SecondController(StageManager stageManager) {
+	public ThirdController(StageManager stageManager) {
 		this.stageManager = stageManager;
 	}
 

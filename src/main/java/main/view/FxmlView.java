@@ -17,12 +17,22 @@ public enum FxmlView {
     }, SECOND {
         @Override
         String getTitle() {
-            return getStringFromResourceBundle("login.title");
+            return getStringFromResourceBundle("second.title");
         }
 
         @Override
         String getFxmlFile() {
             return "/fxml/second.fxml";
+        }
+    }, THIRD {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("third.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/third.fxml";
         }
     };
     

@@ -1,31 +1,26 @@
 package main.controllers;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import main.models.User;
 import main.models.UserStatus;
 import main.repositories.UserRepository;
 import main.repositories.UserStatusRepository;
+import main.view.FxmlView;
+import main.view.StageManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Component
-public class MainController implements Initializable {
-	private Parent root;
-	private ConfigurableApplicationContext springContext;
+public class MainController implements FxmlController {
+	private final StageManager stageManager;
 
 	@FXML private TextField txtFirstName;
 	@FXML private TextField txtLastName;
@@ -38,16 +33,21 @@ public class MainController implements Initializable {
 	@Autowired
 	private UserStatusRepository userStatusRepository;
 
+	@Autowired
+	@Lazy
+	public MainController(StageManager stageManager) {
+		this.stageManager = stageManager;
+	}
+
 	/**
-	 * Called to initialize a controller after its root element has been
-	 * completely processed.
-	 *
-	 * @param location  The location used to resolve relative paths for the root object, or
-	 *                  <tt>null</tt> if the location is not known.
-	 * @param resources The resources used to localize the root object, or <tt>null</tt> if
+	 * Called by the {@link FXMLLoader} to initialize a controller after its
+	 * root element has been completely processed. This means all of the
+	 * controller's {@link FXML} elements will be injected, and they can be used
+	 * to wire up the GUI in ways that couldn't be accomplished using pure FXML,
+	 * e.g. attaching property listeners.
 	 */
 	@Override
-	public void initialize (URL location, ResourceBundle resources) {
+	public void initialize () {
 		loadUserStatuses();
 	}
 
@@ -80,9 +80,11 @@ public class MainController implements Initializable {
 				.map(UserStatus::getTitle).collect(Collectors.toList())));
 	}
 
-	public void changeScene(ActionEvent actionEvent) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/second.fxml"));
-		fxmlLoader.setControllerFactory(springContext::getBean);
-		root = fxmlLoader.load();
+	public void goToSecond() {
+		stageManager.switchScene(FxmlView.SECOND);
+	}
+
+	public void goToThird() {
+		stageManager.switchScene(FxmlView.THIRD);
 	}
 }
