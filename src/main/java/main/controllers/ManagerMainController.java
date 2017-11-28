@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ThirdController implements FxmlController {
+public class ManagerMainController implements FxmlController {
 	private final StageManager stageManager;
 
 	@Autowired
 	@Lazy
-	public ThirdController(StageManager stageManager) {
+	public ManagerMainController (StageManager stageManager) {
 		this.stageManager = stageManager;
 	}
 
@@ -32,5 +32,8 @@ public class ThirdController implements FxmlController {
 
 	public void goBack() {
 		stageManager.switchScene(FxmlView.MAIN);
+	}
+	public void loadSalesScreen() {
+		stageManager.switchScene(FxmlView.SALESMAIN);
 	}
 }

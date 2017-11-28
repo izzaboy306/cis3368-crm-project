@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SecondController implements FxmlController {
+public class SplashScreenController implements FxmlController {
 	private final StageManager stageManager;
 
 	@Autowired
 	@Lazy
-	public SecondController(StageManager stageManager) {
+	public SplashScreenController (StageManager stageManager) {
 		this.stageManager = stageManager;
 	}
 
@@ -26,11 +26,13 @@ public class SecondController implements FxmlController {
 	 * e.g. attaching property listeners.
 	 */
 	@Override
-	public void initialize () {
+	public void initialize () {}
 
+	public void loadSalesScreen() {
+		stageManager.switchScene(FxmlView.SALESMAIN);
 	}
 
-	public void goBack() {
-		stageManager.switchScene(FxmlView.MAIN);
+	public void loadManagerScreen() {
+		stageManager.switchScene(FxmlView.MANAGERMAIN);
 	}
 }

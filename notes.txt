@@ -1,0 +1,28 @@
+public void doPrintUsers () {
+    System.out.println("User List:");
+    Iterable<User> c = userRepository.findAll();
+    c.forEach(System.out::println);
+
+    System.out.println("User Status List:");
+    Iterable<UserStatus> us = userStatusRepository.findAll();
+    us.forEach(System.out::println);
+}
+
+public void doAddUser () {
+    userRepository.save(new User(txtFirstName.getText(), txtLastName.getText()));
+    txtFirstName.clear();
+    txtLastName.clear();
+}
+
+public void doAddStatus () {
+    userStatusRepository.save(new UserStatus((txtStatusTitle.getText())));
+    txtStatusTitle.clear();
+    loadUserStatuses();
+}
+
+private void loadUserStatuses() {
+    userStatusMenu.getItems().clear();
+    userStatusMenu.setItems(FXCollections.observableList(StreamSupport
+            .stream(userStatusRepository.findAll().spliterator(), true)
+            .map(UserStatus::getTitle).collect(Collectors.toList())));
+}

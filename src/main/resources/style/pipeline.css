@@ -1,0 +1,26 @@
+VBox {
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    margin: 5px;
+}
+
+#new-vbox {
+    -fx-background-color: crimson;
+}
+
+#info-vbox {
+    -fx-background-color: cornflowerblue;
+}
+
+#proposal-vbox {
+    -fx-background-color: green;
+}
+
+#negotiation-vbox {
+    -fx-background-color: yellow;
+}
+
+#closing-vbox {
+    -fx-background-color: burlywood;
+}

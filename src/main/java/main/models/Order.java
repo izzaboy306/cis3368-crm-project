@@ -3,6 +3,7 @@ package main.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "order", schema = "public", catalog = "salesfarce")
 public class Order {
 	private int orderId;
 	private String title;
@@ -10,7 +11,16 @@ public class Order {
 	private OrderType orderType;
 	private State state;
 
+	public Order() {
+
+	}
+
+	public Order (String title) {
+		this.title = title;
+	}
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_id", nullable = false)
 	public int getOrderId () {
 		return orderId;
@@ -31,7 +41,7 @@ public class Order {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "order_status_id", nullable = false)
+	@JoinColumn(name = "order_status_id")
 	public OrderStatus getOrderStatus () {
 		return orderStatus;
 	}
@@ -41,7 +51,7 @@ public class Order {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "order_type_id", nullable = false)
+	@JoinColumn(name = "order_type_id")
 	public OrderType getOrderType () {
 		return orderType;
 	}
@@ -51,7 +61,7 @@ public class Order {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "state_id", nullable = true)
+	@JoinColumn(name = "state_id")
 	public State getState () {
 		return state;
 	}
@@ -78,5 +88,9 @@ public class Order {
 		int result = orderId;
 		result = 31 * result + (title != null ? title.hashCode() : 0);
 		return result;
+	}
+
+	public String toString() {
+		return title;
 	}
 }

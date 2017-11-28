@@ -71,8 +71,8 @@ CREATE TABLE "order"
 (
   order_id        SERIAL PRIMARY KEY,
   title           VARCHAR(20) NOT NULL,
-  order_status_id INTEGER     NOT NULL,
-  order_type_id   INTEGER     NOT NULL,
+  order_status_id INTEGER,
+  order_type_id   INTEGER,
   state_id        INTEGER,
   CONSTRAINT fk_order_order_status
   FOREIGN KEY (order_status_id)

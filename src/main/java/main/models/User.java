@@ -11,7 +11,8 @@ public class User {
 	private UserStatus userStatus;
 	private UserType userType;
 
-	public User () {}
+	public User () {
+	}
 
 	public User (String firstName, String lastName) {
 		this.firstName = firstName;

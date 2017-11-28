@@ -12,27 +12,27 @@ public enum FxmlView {
 
         @Override
         String getFxmlFile() {
-            return "/fxml/Main.fxml";
+            return "/fxml/splashscreen.fxml";
         }
-    }, SECOND {
+    }, SALESMAIN {
         @Override
         String getTitle() {
-            return getStringFromResourceBundle("second.title");
+            return getStringFromResourceBundle("salesmain.title");
         }
 
         @Override
         String getFxmlFile() {
-            return "/fxml/second.fxml";
+            return "/fxml/salesmain.fxml";
         }
-    }, THIRD {
+    }, MANAGERMAIN {
         @Override
         String getTitle() {
-            return getStringFromResourceBundle("third.title");
+            return getStringFromResourceBundle("managermain.title");
         }
 
         @Override
         String getFxmlFile() {
-            return "/fxml/third.fxml";
+            return "/fxml/managermain.fxml";
         }
     };
     
