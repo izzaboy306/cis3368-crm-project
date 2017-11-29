@@ -1,19 +1,31 @@
 package main.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "order_status", schema = "public", catalog = "salesfarce")
-public class OrderStatus {
+public class OrderStatus implements Serializable {
 	private int orderStatusId;
 	private String title;
 	private Set<Order> orders;
+	private List<Order> ordersByOrderStatusId;
+
+	public OrderStatus () {
+
+	}
+
+	public OrderStatus (String title) {
+		this.title = title;
+	}
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "orderStatus", cascade = CascadeType.ALL)
 	public Set<Order> getOrders () {
 		return orders;
 	}
+
 
 	public void setOrders (Set<Order> orders) {
 		this.orders = orders;
@@ -58,4 +70,5 @@ public class OrderStatus {
 		result = 31 * result + (title != null ? title.hashCode() : 0);
 		return result;
 	}
+
 }

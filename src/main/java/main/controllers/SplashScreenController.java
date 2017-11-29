@@ -2,11 +2,16 @@ package main.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import main.models.OrderStatus;
+import main.repositories.OrderStatusRepository;
 import main.view.FxmlView;
 import main.view.StageManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class SplashScreenController implements FxmlController {
@@ -18,6 +23,9 @@ public class SplashScreenController implements FxmlController {
 		this.stageManager = stageManager;
 	}
 
+	@Autowired
+	OrderStatusRepository orderStatusRepository;
+
 	/**
 	 * Called by the {@link FXMLLoader} to initialize a controller after its
 	 * root element has been completely processed. This means all of the
@@ -26,13 +34,19 @@ public class SplashScreenController implements FxmlController {
 	 * e.g. attaching property listeners.
 	 */
 	@Override
-	public void initialize () {}
+	public void initialize () {
+	}
 
-	public void loadSalesScreen() {
+	public void loadSalesScreen () {
 		stageManager.switchScene(FxmlView.SALESMAIN);
 	}
 
-	public void loadManagerScreen() {
+	public void loadManagerScreen () {
 		stageManager.switchScene(FxmlView.MANAGERMAIN);
+	}
+
+	@Bean
+	public List<OrderStatus> orderStatuses () {
+		return orderStatusRepository.findAll();
 	}
 }

@@ -1,22 +1,26 @@
 package main.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "order", schema = "public", catalog = "salesfarce")
-public class Order {
+public class Order implements Serializable {
 	private int orderId;
 	private String title;
 	private OrderStatus orderStatus;
 	private OrderType orderType;
 	private State state;
 
-	public Order() {
-
+	public Order () {
 	}
 
-	public Order (String title) {
+	public Order (int orderId, String title, OrderStatus orderStatus, OrderType orderType, State state) {
+		this.orderId = orderId;
 		this.title = title;
+		this.orderStatus = orderStatus;
+		this.orderType = orderType;
+		this.state = state;
 	}
 
 	@Id
@@ -90,7 +94,7 @@ public class Order {
 		return result;
 	}
 
-	public String toString() {
+	public String toString () {
 		return title;
 	}
 }
