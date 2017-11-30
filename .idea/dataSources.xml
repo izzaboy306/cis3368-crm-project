@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="salesfarce@localhost" uuid="cd4404db-f6d5-4443-9ede-a0cbfba2bf7a">
+    <data-source source="LOCAL" name="NewPersistenceUnit/Hibernate" uuid="2cacc8d3-1d3b-451c-80e3-413fa4d4a28e">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/src/main/java/META-INF/persistence.xml</remarks>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/salesfarce</jdbc-url>
       <driver-properties>

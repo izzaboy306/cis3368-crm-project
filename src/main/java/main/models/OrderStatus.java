@@ -1,17 +1,14 @@
 package main.models;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "order_status", schema = "public", catalog = "salesfarce")
-public class OrderStatus implements Serializable {
+public class OrderStatus {
 	private int orderStatusId;
 	private String title;
 	private Set<Order> orders;
-	private List<Order> ordersByOrderStatusId;
 
 	public OrderStatus () {
 

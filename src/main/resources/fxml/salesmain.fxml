@@ -9,7 +9,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="homeMenuItem" mnemonicParsing="false" text="Home" />
+              <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -28,7 +29,7 @@
    <center>
       <VBox BorderPane.alignment="CENTER">
           <children>
-              <fx:include fx:id="details" source="pipeline.fxml" />
+              <fx:include fx:id="salesPipeline" source="pipeline.fxml" />
           </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -39,8 +40,8 @@
       <ButtonBar prefHeight="40.0" BorderPane.alignment="CENTER">
         <buttons>
             <TextField fx:id="txtNewLeadField" promptText="Start a lead.." />
-          <Button fx:id="btnAddProspect" mnemonicParsing="false" onAction="#loadNewProspectScreen" text="Add New Prospect" />
-            <Button mnemonicParsing="false" onAction="#goBack" text="Go Back" />
+            <ComboBox fx:id="menuEmployeeList" prefWidth="150.0" promptText="Assign Employee.." />
+          <Button mnemonicParsing="false" onAction="#createNewProspect" text="Add New Prospect" />
         </buttons>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -48,7 +49,7 @@
       </ButtonBar>
    </bottom>
    <right>
-      <VBox prefWidth="250.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+      <VBox prefWidth="250.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" right="10.0" top="10.0" />
          </BorderPane.margin></VBox>

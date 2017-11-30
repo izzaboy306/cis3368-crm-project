@@ -18,13 +18,13 @@ public class SplashScreenController implements FxmlController {
 	private final StageManager stageManager;
 
 	@Autowired
+	private OrderStatusRepository orderStatusRepository;
+
+	@Autowired
 	@Lazy
 	public SplashScreenController (StageManager stageManager) {
 		this.stageManager = stageManager;
 	}
-
-	@Autowired
-	OrderStatusRepository orderStatusRepository;
 
 	/**
 	 * Called by the {@link FXMLLoader} to initialize a controller after its
@@ -35,6 +35,7 @@ public class SplashScreenController implements FxmlController {
 	 */
 	@Override
 	public void initialize () {
+
 	}
 
 	public void loadSalesScreen () {

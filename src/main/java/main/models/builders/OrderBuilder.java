@@ -1,9 +1,6 @@
 package main.models.builders;
 
-import main.models.Order;
-import main.models.OrderStatus;
-import main.models.OrderType;
-import main.models.State;
+import main.models.*;
 
 public class OrderBuilder {
 	private int orderId;
@@ -11,6 +8,7 @@ public class OrderBuilder {
 	private OrderStatus orderStatus;
 	private OrderType orderType;
 	private State state;
+	private User user;
 
 	public OrderBuilder setOrderId (int orderId) {
 		this.orderId = orderId;
@@ -37,7 +35,12 @@ public class OrderBuilder {
 		return this;
 	}
 
+	public OrderBuilder setUser (User user) {
+		this.user = user;
+		return this;
+	}
+
 	public Order createOrder () {
-		return new Order(orderId, title, orderStatus, orderType, state);
+		return new Order(orderId, title, orderStatus, orderType, state, user);
 	}
 }

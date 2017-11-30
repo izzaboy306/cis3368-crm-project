@@ -1,6 +1,7 @@
 package main.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "public", catalog = "salesfarce")
@@ -10,6 +11,7 @@ public class User {
 	private String lastName;
 	private UserStatus userStatus;
 	private UserType userType;
+	private Set<Order> orders;
 
 	public User () {
 	}
@@ -17,6 +19,15 @@ public class User {
 	public User (String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+	}
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+	public Set<Order> getOrders () {
+		return orders;
+	}
+
+	public void setOrders (Set<Order> orders) {
+		this.orders = orders;
 	}
 
 	@ManyToOne
@@ -70,6 +81,10 @@ public class User {
 		this.lastName = lastName;
 	}
 
+	public String retrieveFullName() {
+		return firstName + " " + lastName;
+	}
+
 	@Override
 	public boolean equals (Object o) {
 		if (this == o) return true;
@@ -94,11 +109,6 @@ public class User {
 
 	@Override
 	public String toString () {
-		return "User{" +
-				"userId=" + userId +
-				", firstName='" + firstName + '\'' +
-				", lastName='" + lastName + '\'' +
-				", userStatus=" + userStatus +
-				'}';
+		return retrieveFullName();
 	}
 }
