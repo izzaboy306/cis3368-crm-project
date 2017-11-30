@@ -95,7 +95,8 @@ public class SalesMainController implements FxmlController {
 			db.setContent(cc);
 
 			// This is what really matters.
-			//selectedOrder[0] = prospectList.getSelectionModel().getSelectedItem();
+			selectedOrder[0] = prospectList.getSelectionModel().getSelectedItem();
+
 		});
 
 		infoList.setOnDragEntered(dragEvent -> {
