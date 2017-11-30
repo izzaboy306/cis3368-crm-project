@@ -38,6 +38,10 @@ public class SalesPipelineController implements FxmlController {
 	public void initialize () {
 		updatePipeline();
 		initializeProspectListListeners();
+		initializeInformationGatheringListListeners();
+		initializeProposalListListeners();
+		initializeNegotiationListListeners();
+		//initializeClosingListListeners();
 	}
 
 	protected void updatePipeline () {
@@ -55,8 +59,9 @@ public class SalesPipelineController implements FxmlController {
 	}
 
 	private void initializeProspectListListeners () {
-		final Order[] selectedOrder = new Order[1];
+		final Order[] selectedOrderFromProspect = new Order[1];
 
+		// Prospect List - Starting point
 		prospectList.setOnDragDetected(event -> {
 			// Dummy action to get the drag event initiated.
 			Dragboard db = prospectList.startDragAndDrop(TransferMode.MOVE);
@@ -65,10 +70,11 @@ public class SalesPipelineController implements FxmlController {
 			db.setContent(cc);
 
 			// This is what really matters.
-			selectedOrder[0] = prospectList.getSelectionModel().getSelectedItem();
+			selectedOrderFromProspect[0] = prospectList.getSelectionModel().getSelectedItem();
 
 		});
 
+		// Information Gathering List
 		infoList.setOnDragEntered(dragEvent -> {
 			infoList.setBlendMode(BlendMode.DIFFERENCE);
 		});
@@ -82,11 +88,11 @@ public class SalesPipelineController implements FxmlController {
 		});
 
 		infoList.setOnDragDropped(dragEvent -> {
-			orderRepository.removeByOrderId(selectedOrder[0].getOrderId());
-			Order t = selectedOrder[0];
+			Order t = selectedOrderFromProspect[0];
 			t.setOrderStatus(orderStatuses.get(1));
 			orderRepository.save(t);
 			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
 			updatePipeline();
 		});
 
@@ -104,11 +110,12 @@ public class SalesPipelineController implements FxmlController {
 		});
 
 		proposalList.setOnDragDropped(dragEvent -> {
-			orderRepository.removeByOrderId(selectedOrder[0].getOrderId());
-			Order t = selectedOrder[0];
+
+			Order t = selectedOrderFromProspect[0];
 			t.setOrderStatus(orderStatuses.get(2));
 			orderRepository.save(t);
 			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
 			updatePipeline();
 		});
 
@@ -126,11 +133,12 @@ public class SalesPipelineController implements FxmlController {
 		});
 
 		negotiationList.setOnDragDropped(dragEvent -> {
-			orderRepository.removeByOrderId(selectedOrder[0].getOrderId());
-			Order t = selectedOrder[0];
+
+			Order t = selectedOrderFromProspect[0];
 			t.setOrderStatus(orderStatuses.get(3));
 			orderRepository.save(t);
 			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
 			updatePipeline();
 		});
 
@@ -148,11 +156,440 @@ public class SalesPipelineController implements FxmlController {
 		});
 
 		closingList.setOnDragDropped(dragEvent -> {
-			orderRepository.removeByOrderId(selectedOrder[0].getOrderId());
-			Order t = selectedOrder[0];
+
+			Order t = selectedOrderFromProspect[0];
 			t.setOrderStatus(orderStatuses.get(4));
 			orderRepository.save(t);
 			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+	}
+
+	private void initializeInformationGatheringListListeners () {
+		final Order[] selectedOrderFromInfo = new Order[1];
+
+		// Starting Point
+		infoList.setOnDragDetected(event -> {
+			// Dummy action to get the drag event initiated.
+			Dragboard db = infoList.startDragAndDrop(TransferMode.MOVE);
+			ClipboardContent cc = new ClipboardContent();
+			cc.putString("Dummy Data");
+			db.setContent(cc);
+
+			// This is what really matters.
+			selectedOrderFromInfo[0] = infoList.getSelectionModel().getSelectedItem();
+
+		});
+
+		// Prospect List
+		prospectList.setOnDragEntered(dragEvent -> {
+			prospectList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		prospectList.setOnDragExited(dragEvent -> {
+			prospectList.setBlendMode(null);
+		});
+
+		prospectList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		prospectList.setOnDragDropped(dragEvent -> {
+			Order t = selectedOrderFromInfo[0];
+			t.setOrderStatus(orderStatuses.get(0));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Proposal List
+		proposalList.setOnDragEntered(dragEvent -> {
+			proposalList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		proposalList.setOnDragExited(dragEvent -> {
+			proposalList.setBlendMode(null);
+		});
+
+		proposalList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		proposalList.setOnDragDropped(dragEvent -> {
+			Order t = selectedOrderFromInfo[0];
+			t.setOrderStatus(orderStatuses.get(2));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Negotiation List
+		negotiationList.setOnDragEntered(dragEvent -> {
+			negotiationList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		negotiationList.setOnDragExited(dragEvent -> {
+			negotiationList.setBlendMode(null);
+		});
+
+		negotiationList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		negotiationList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromInfo[0];
+			t.setOrderStatus(orderStatuses.get(3));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Closing List
+		closingList.setOnDragEntered(dragEvent -> {
+			closingList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		closingList.setOnDragExited(dragEvent -> {
+			closingList.setBlendMode(null);
+		});
+
+		closingList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		closingList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromInfo[0];
+			t.setOrderStatus(orderStatuses.get(4));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+	}
+
+	private void initializeProposalListListeners () {
+		final Order[] selectedOrderFromProposal = new Order[1];
+
+		proposalList.setOnDragDetected(event -> {
+			// Dummy action to get the drag event initiated.
+			Dragboard db = proposalList.startDragAndDrop(TransferMode.MOVE);
+			ClipboardContent cc = new ClipboardContent();
+			cc.putString("Dummy Data");
+			db.setContent(cc);
+
+			// This is what really matters.
+			selectedOrderFromProposal[0] = proposalList.getSelectionModel().getSelectedItem();
+
+		});
+
+		infoList.setOnDragEntered(dragEvent -> {
+			infoList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		infoList.setOnDragExited(dragEvent -> {
+			infoList.setBlendMode(null);
+		});
+
+		infoList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		infoList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromProposal[0];
+			t.setOrderStatus(orderStatuses.get(1));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Prosposal List
+		prospectList.setOnDragEntered(dragEvent -> {
+			prospectList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		prospectList.setOnDragExited(dragEvent -> {
+			prospectList.setBlendMode(null);
+		});
+
+		prospectList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		prospectList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromProposal[0];
+			t.setOrderStatus(orderStatuses.get(0));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Negotiation List
+		negotiationList.setOnDragEntered(dragEvent -> {
+			negotiationList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		negotiationList.setOnDragExited(dragEvent -> {
+			negotiationList.setBlendMode(null);
+		});
+
+		negotiationList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		negotiationList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromProposal[0];
+			t.setOrderStatus(orderStatuses.get(3));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Closing List
+		closingList.setOnDragEntered(dragEvent -> {
+			closingList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		closingList.setOnDragExited(dragEvent -> {
+			closingList.setBlendMode(null);
+		});
+
+		closingList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		closingList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromProposal[0];
+			t.setOrderStatus(orderStatuses.get(4));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+	}
+
+	private void initializeNegotiationListListeners () {
+		final Order[] selectedOrderFromNegotiation = new Order[1];
+
+		negotiationList.setOnDragDetected(event -> {
+			// Dummy action to get the drag event initiated.
+			Dragboard db = negotiationList.startDragAndDrop(TransferMode.MOVE);
+			ClipboardContent cc = new ClipboardContent();
+			cc.putString("Dummy Data");
+			db.setContent(cc);
+
+			// This is what really matters.
+			selectedOrderFromNegotiation[0] = negotiationList.getSelectionModel().getSelectedItem();
+
+		});
+
+		infoList.setOnDragEntered(dragEvent -> {
+			infoList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		infoList.setOnDragExited(dragEvent -> {
+			infoList.setBlendMode(null);
+		});
+
+		infoList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		infoList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromNegotiation[0];
+			t.setOrderStatus(orderStatuses.get(1));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Prosposal List
+		proposalList.setOnDragEntered(dragEvent -> {
+			proposalList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		proposalList.setOnDragExited(dragEvent -> {
+			proposalList.setBlendMode(null);
+		});
+
+		proposalList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		proposalList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromNegotiation[0];
+			t.setOrderStatus(orderStatuses.get(2));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Negotiation List
+		prospectList.setOnDragEntered(dragEvent -> {
+			prospectList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		prospectList.setOnDragExited(dragEvent -> {
+			prospectList.setBlendMode(null);
+		});
+
+		prospectList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		prospectList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromNegotiation[0];
+			t.setOrderStatus(orderStatuses.get(0));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Closing List
+		closingList.setOnDragEntered(dragEvent -> {
+			closingList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		closingList.setOnDragExited(dragEvent -> {
+			closingList.setBlendMode(null);
+		});
+
+		closingList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		closingList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromNegotiation[0];
+			t.setOrderStatus(orderStatuses.get(4));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+	}
+
+	private void initializeClosingListListeners () {
+		final Order[] selectedOrderFromClosing = new Order[1];
+
+		closingList.setOnDragDetected(event -> {
+			// Dummy action to get the drag event initiated.
+			Dragboard db = closingList.startDragAndDrop(TransferMode.MOVE);
+			ClipboardContent cc = new ClipboardContent();
+			cc.putString("Dummy Data");
+			db.setContent(cc);
+
+			// This is what really matters.
+			selectedOrderFromClosing[0] = closingList.getSelectionModel().getSelectedItem();
+
+		});
+
+		infoList.setOnDragEntered(dragEvent -> {
+			infoList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		infoList.setOnDragExited(dragEvent -> {
+			infoList.setBlendMode(null);
+		});
+
+		infoList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		infoList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromClosing[0];
+			t.setOrderStatus(orderStatuses.get(1));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Prosposal List
+		proposalList.setOnDragEntered(dragEvent -> {
+			proposalList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		proposalList.setOnDragExited(dragEvent -> {
+			proposalList.setBlendMode(null);
+		});
+
+		proposalList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		proposalList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromClosing[0];
+			t.setOrderStatus(orderStatuses.get(2));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Negotiation List
+		negotiationList.setOnDragEntered(dragEvent -> {
+			negotiationList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		negotiationList.setOnDragExited(dragEvent -> {
+			negotiationList.setBlendMode(null);
+		});
+
+		negotiationList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		negotiationList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromClosing[0];
+			t.setOrderStatus(orderStatuses.get(3));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
+			updatePipeline();
+		});
+
+		// Prospect List
+		prospectList.setOnDragEntered(dragEvent -> {
+			prospectList.setBlendMode(BlendMode.DIFFERENCE);
+		});
+
+		prospectList.setOnDragExited(dragEvent -> {
+			prospectList.setBlendMode(null);
+		});
+
+		prospectList.setOnDragOver(dragEvent -> {
+			dragEvent.acceptTransferModes(TransferMode.MOVE);
+		});
+
+		prospectList.setOnDragDropped(dragEvent -> {
+
+			Order t = selectedOrderFromClosing[0];
+			t.setOrderStatus(orderStatuses.get(0));
+			orderRepository.save(t);
+			dragEvent.setDropCompleted(true);
+			dragEvent.consume();
 			updatePipeline();
 		});
 	}

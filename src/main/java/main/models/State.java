@@ -69,8 +69,7 @@ public class State {
 
 		if (stateId != state.stateId) return false;
 		if (!title.equals(state.title)) return false;
-		if (!abbreviation.equals(state.abbreviation)) return false;
-		return country.equals(state.country);
+		return abbreviation.equals(state.abbreviation) && country.equals(state.country);
 	}
 
 	@Override
