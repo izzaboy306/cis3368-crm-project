@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../style/pipeline.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.SalesPipelineController">
+    <children>
+        <VBox id="new-vbox" alignment="TOP_CENTER" prefWidth="200.0">
+            <children>
+                <Label alignment="CENTER" text="New Prospect">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Line endX="100.0" startX="-100.0" />
+                <ListView fx:id="prospectList" onMouseClicked="#printOrderDetails" VBox.vgrow="ALWAYS">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ListView>
+            </children>
+            <HBox.margin>
+                <Insets right="2.5" />
+            </HBox.margin>
+        </VBox>
+        <VBox id="info-vbox" alignment="TOP_CENTER" prefWidth="200.0">
+            <children>
+                <Label text="Information Gathering">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Line endX="100.0" startX="-100.0" />
+                <ListView fx:id="infoList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ListView>
+            </children>
+            <HBox.margin>
+                <Insets left="2.5" right="2.5" />
+            </HBox.margin>
+        </VBox>
+        <VBox id="proposal-vbox" alignment="TOP_CENTER" prefWidth="200.0">
+            <children>
+                <Label text="Proposal">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Line endX="100.0" startX="-100.0" />
+                <ListView fx:id="proposalList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ListView>
+            </children>
+            <HBox.margin>
+                <Insets left="2.5" right="2.5" />
+            </HBox.margin>
+        </VBox>
+        <VBox id="negotiation-vbox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <Label text="Negotiation">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Line endX="100.0" startX="-100.0" />
+                <ListView fx:id="negotiationList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ListView>
+            </children>
+            <HBox.margin>
+                <Insets left="2.5" right="2.5" />
+            </HBox.margin>
+        </VBox>
+        <VBox id="closing-vbox" alignment="TOP_CENTER" prefHeight="450.0" prefWidth="200.0">
+            <children>
+                <Label text="Closing">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Line endX="100.0" startX="-100.0" />
+                <ListView fx:id="closingList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ListView>
+            </children>
+            <HBox.margin>
+                <Insets left="2.5" />
+            </HBox.margin>
+        </VBox>
+    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</HBox>

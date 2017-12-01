@@ -9,14 +9,13 @@ import javafx.scene.input.*;
 import main.models.Order;
 import main.models.OrderStatus;
 import main.repositories.OrderRepository;
-import main.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class SalesPipelineController implements FxmlController {
+public class ManagerPipelineController implements FxmlController {
 	@FXML private ListView<Order> prospectList;
 	@FXML private ListView<Order> infoList;
 	@FXML private ListView<Order> proposalList;
@@ -24,10 +23,9 @@ public class SalesPipelineController implements FxmlController {
 	@FXML private ListView<Order> closingList;
 
 	@Autowired private OrderRepository orderRepository;
-	@Autowired private UserRepository userRepository;
 	@Autowired private List<OrderStatus> orderStatuses;
 
-	private final DataFormat custom_order_format = new DataFormat("A sales order for the salesman.");
+	private final DataFormat custom_order_format = new DataFormat("A sales order for the manager.");
 	private Order selectedOrder;
 	private ListView selectedList;
 	private ListView[] listViewList;
@@ -53,21 +51,11 @@ public class SalesPipelineController implements FxmlController {
 		negotiationList.getItems().clear();
 		closingList.getItems().clear();
 
-		prospectList.setItems(FXCollections.observableList(orderRepository
-				.findByOrderStatusAndUser(orderStatuses.get(0),
-						userRepository.findByFirstNameAndLastName("Ethan", "Orcutt"))));
-		infoList.setItems(FXCollections.observableList(orderRepository
-				.findByOrderStatusAndUser(orderStatuses.get(1),
-						userRepository.findByFirstNameAndLastName("Ethan", "Orcutt"))));
-		proposalList.setItems(FXCollections.observableList(orderRepository
-				.findByOrderStatusAndUser(orderStatuses.get(2),
-						userRepository.findByFirstNameAndLastName("Ethan", "Orcutt"))));
-		negotiationList.setItems(FXCollections.observableList(orderRepository
-				.findByOrderStatusAndUser(orderStatuses.get(3),
-						userRepository.findByFirstNameAndLastName("Ethan", "Orcutt"))));
-		closingList.setItems(FXCollections.observableList(orderRepository
-				.findByOrderStatusAndUser(orderStatuses.get(4),
-						userRepository.findByFirstNameAndLastName("Ethan", "Orcutt"))));
+		prospectList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(0))));
+		infoList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(1))));
+		proposalList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(2))));
+		negotiationList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(3))));
+		closingList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(4))));
 	}
 
 	private void setDragEvents () {

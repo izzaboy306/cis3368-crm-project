@@ -8,7 +8,5 @@ import java.util.List;
 
 @Repository
 public interface OrderStatusRepository extends CrudRepository<OrderStatus, Integer> {
-	OrderStatus findByOrderStatusId (int id);
-
 	List<OrderStatus> findAll ();
 }

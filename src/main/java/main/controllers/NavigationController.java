@@ -1,28 +1,25 @@
 package main.controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import main.models.OrderStatus;
-import main.repositories.OrderStatusRepository;
+import javafx.scene.control.MenuItem;
 import main.view.FxmlView;
 import main.view.StageManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
-public class SplashScreenController implements FxmlController {
+public class NavigationController implements FxmlController {
 	private final StageManager stageManager;
 
-	@Autowired
-	private OrderStatusRepository orderStatusRepository;
+	@FXML private MenuItem exitMenuItem;
+	@FXML private MenuItem homeMenuItem;
 
 	@Autowired
 	@Lazy
-	public SplashScreenController (StageManager stageManager) {
+	public NavigationController (StageManager stageManager) {
 		this.stageManager = stageManager;
 	}
 
@@ -35,23 +32,7 @@ public class SplashScreenController implements FxmlController {
 	 */
 	@Override
 	public void initialize () {
-
-	}
-
-	public void loadSalesPipeline () {
-		stageManager.switchScene(FxmlView.SALESPIPELINE);
-	}
-
-	public void loadManagerPipeline () {
-		stageManager.switchScene(FxmlView.MANAGERPIPELINE);
-	}
-
-	public void loadLoginScreen () {
-		stageManager.switchScene(FxmlView.LOGIN);
-	}
-
-	@Bean
-	public List<OrderStatus> orderStatuses () {
-		return orderStatusRepository.findAll();
+		homeMenuItem.setOnAction(event -> stageManager.switchScene(FxmlView.MAIN));
+		exitMenuItem.setOnAction(event -> Platform.exit());
 	}
 }

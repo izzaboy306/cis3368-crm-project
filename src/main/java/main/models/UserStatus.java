@@ -1,11 +1,12 @@
 package main.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "user_status", schema = "public", catalog = "salesfarce")
-public class UserStatus {
+public class UserStatus implements Serializable {
 	private int userStatusId;
 	private String title;
 	private Set<User> users;

@@ -1,7 +1,11 @@
 package main.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ComboBox;
+import main.models.User;
+import main.repositories.UserRepository;
 import main.view.FxmlView;
 import main.view.StageManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +13,16 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ManagerMainController implements FxmlController {
+public class LoginController implements FxmlController {
 	private final StageManager stageManager;
+
+	@FXML private ComboBox<User> menuEmployeeList;
+
+	@Autowired private UserRepository userRepository;
 
 	@Autowired
 	@Lazy
-	public ManagerMainController (StageManager stageManager) {
+	public LoginController (StageManager stageManager) {
 		this.stageManager = stageManager;
 	}
 
@@ -27,13 +35,14 @@ public class ManagerMainController implements FxmlController {
 	 */
 	@Override
 	public void initialize () {
-
+		menuEmployeeList.setItems(FXCollections.observableList(userRepository.findAll()));
 	}
 
-	public void goBack() {
-		stageManager.switchScene(FxmlView.MAIN);
+	public void loginAsUser () {
+		stageManager.switchScene(FxmlView.SALESPIPELINE);
 	}
-	public void loadSalesScreen() {
-		stageManager.switchScene(FxmlView.SALESMAIN);
+
+	public void loginAsManager () {
+		stageManager.switchScene(FxmlView.MANAGERPIPELINE);
 	}
 }
