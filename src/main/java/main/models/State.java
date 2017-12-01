@@ -1,10 +1,11 @@
 package main.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-public class State {
+public class State implements Serializable {
 	private int stateId;
 	private String title;
 	private String abbreviation;

@@ -1,11 +1,12 @@
 package main.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "user_type", schema = "public", catalog = "salesfarce")
-public class UserType {
+public class UserType implements Serializable {
 	private int userTypeId;
 	private String title;
 	private Set<User> users;
@@ -57,5 +58,10 @@ public class UserType {
 		int result = userTypeId;
 		result = 31 * result + (title != null ? title.hashCode() : 0);
 		return result;
+	}
+
+	@Override
+	public String toString () {
+		return getTitle();
 	}
 }

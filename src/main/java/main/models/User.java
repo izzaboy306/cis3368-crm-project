@@ -22,6 +22,14 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
+	public User (String firstName, String lastName, UserStatus userStatus, UserType userType, Set<Order> orders) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userStatus = userStatus;
+		this.userType = userType;
+		this.orders = orders;
+	}
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	public Set<Order> getOrders () {
 		return orders;

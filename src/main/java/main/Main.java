@@ -2,18 +2,29 @@ package main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import main.models.OrderStatus;
+import main.models.UserType;
+import main.repositories.OrderStatusRepository;
+import main.repositories.UserTypeRepository;
 import main.view.FxmlView;
 import main.view.StageManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 @SpringBootApplication
 public class Main extends Application {
 	private ConfigurableApplicationContext springContext;
 	private StageManager stageManager;
 
-	public static void main(String[] args) {
+	@Autowired private OrderStatusRepository orderStatusRepository;
+	@Autowired private UserTypeRepository userTypeRepository;
+
+	public static void main (String[] args) {
 		launch();
 	}
 
@@ -35,7 +46,7 @@ public class Main extends Application {
 	 * </p>
 	 */
 	@Override
-	public void init() throws Exception {
+	public void init () throws Exception {
 		springContext = bootstrapSpringApplicationContext();
 	}
 
@@ -47,10 +58,9 @@ public class Main extends Application {
 	 * <p>
 	 * NOTE: This method is called on the JavaFX Application Thread.
 	 * </p>
-	 *
 	 */
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start (Stage stage) throws Exception {
 		stageManager = springContext.getBean(StageManager.class, stage);
 		displayInitialScene();
 	}
@@ -72,15 +82,24 @@ public class Main extends Application {
 		springContext.stop();
 	}
 
-	private void displayInitialScene() {
+	private void displayInitialScene () {
 		stageManager.switchScene(FxmlView.MAIN);
 	}
 
-	private ConfigurableApplicationContext bootstrapSpringApplicationContext() {
+	private ConfigurableApplicationContext bootstrapSpringApplicationContext () {
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);
 		String[] args = getParameters().getRaw().stream().toArray(String[]::new);
 		builder.headless(false);
 		return builder.run(args);
 	}
 
+	@Bean
+	public List<OrderStatus> orderStatuses () {
+		return orderStatusRepository.findAll();
+	}
+
+	@Bean
+	public List<UserType> userTypes () {
+		return userTypeRepository.findAll();
+	}
 }

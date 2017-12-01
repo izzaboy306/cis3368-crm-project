@@ -3,17 +3,11 @@ package main.models.builders;
 import main.models.*;
 
 public class OrderBuilder {
-	private int orderId;
 	private String title;
 	private OrderStatus orderStatus;
 	private OrderType orderType;
 	private State state;
 	private User user;
-
-	public OrderBuilder setOrderId (int orderId) {
-		this.orderId = orderId;
-		return this;
-	}
 
 	public OrderBuilder setTitle (String title) {
 		this.title = title;
@@ -41,6 +35,6 @@ public class OrderBuilder {
 	}
 
 	public Order createOrder () {
-		return new Order(orderId, title, orderStatus, orderType, state, user);
+		return new Order(title, orderStatus, orderType, state, user);
 	}
 }

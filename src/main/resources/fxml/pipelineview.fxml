@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.*?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="main.controllers.SalesPipelineViewController">
+            fx:controller="main.controllers.PipelineViewController">
     <top>
         <fx:include fx:id="navbar" source="navbar.fxml"/>
     </top>
     <center>
-        <fx:include fx:id="salesPipeline" source="salesPipeline.fxml"/>
+        <fx:include fx:id="pipeline" source="pipeline.fxml"/>
     </center>
     <bottom>
         <ButtonBar prefHeight="40.0" BorderPane.alignment="CENTER">

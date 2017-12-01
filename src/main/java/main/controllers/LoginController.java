@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import main.models.User;
 import main.repositories.UserRepository;
+import main.services.ActiveUserService;
 import main.view.FxmlView;
 import main.view.StageManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class LoginController implements FxmlController {
 
 	@FXML private ComboBox<User> menuEmployeeList;
 
+	@Autowired private ActiveUserService activeUserService;
 	@Autowired private UserRepository userRepository;
 
 	@Autowired
@@ -38,11 +40,8 @@ public class LoginController implements FxmlController {
 		menuEmployeeList.setItems(FXCollections.observableList(userRepository.findAll()));
 	}
 
-	public void loginAsUser () {
+	public void loginUser () {
+		activeUserService.setActiveUser(menuEmployeeList.getSelectionModel().getSelectedItem());
 		stageManager.switchScene(FxmlView.SALESPIPELINE);
-	}
-
-	public void loginAsManager () {
-		stageManager.switchScene(FxmlView.MANAGERPIPELINE);
 	}
 }

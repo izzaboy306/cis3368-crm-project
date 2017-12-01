@@ -8,14 +8,17 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.*;
 import main.models.Order;
 import main.models.OrderStatus;
+import main.models.User;
+import main.models.UserType;
 import main.repositories.OrderRepository;
+import main.services.ActiveUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class ManagerPipelineController implements FxmlController {
+public class PipelineController implements FxmlController {
 	@FXML private ListView<Order> prospectList;
 	@FXML private ListView<Order> infoList;
 	@FXML private ListView<Order> proposalList;
@@ -24,8 +27,10 @@ public class ManagerPipelineController implements FxmlController {
 
 	@Autowired private OrderRepository orderRepository;
 	@Autowired private List<OrderStatus> orderStatuses;
+	@Autowired private List<UserType> userTypes;
+	@Autowired private ActiveUserService activeUserService;
 
-	private final DataFormat custom_order_format = new DataFormat("A sales order for the manager.");
+	private final DataFormat custom_order_format = new DataFormat("A sales order for the salesman.");
 	private Order selectedOrder;
 	private ListView selectedList;
 	private ListView[] listViewList;
@@ -45,17 +50,33 @@ public class ManagerPipelineController implements FxmlController {
 	}
 
 	protected void updatePipeline () {
+		User activeUser = activeUserService.getActiveUser();
+
 		prospectList.getItems().clear();
 		infoList.getItems().clear();
 		proposalList.getItems().clear();
 		negotiationList.getItems().clear();
 		closingList.getItems().clear();
 
-		prospectList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(0))));
-		infoList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(1))));
-		proposalList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(2))));
-		negotiationList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(3))));
-		closingList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(4))));
+		if (activeUser.getUserType().equals(userTypes.get(0))) {
+			prospectList.setItems(FXCollections.observableList(orderRepository
+					.findByOrderStatusAndUser(orderStatuses.get(0), activeUser)));
+			infoList.setItems(FXCollections.observableList(orderRepository
+					.findByOrderStatusAndUser(orderStatuses.get(1), activeUser)));
+			proposalList.setItems(FXCollections.observableList(orderRepository
+					.findByOrderStatusAndUser(orderStatuses.get(2), activeUser)));
+			negotiationList.setItems(FXCollections.observableList(orderRepository
+					.findByOrderStatusAndUser(orderStatuses.get(3), activeUser)));
+			closingList.setItems(FXCollections.observableList(orderRepository
+					.findByOrderStatusAndUser(orderStatuses.get(4), activeUser)));
+
+		} else {
+			prospectList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(0))));
+			infoList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(1))));
+			proposalList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(2))));
+			negotiationList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(3))));
+			closingList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(4))));
+		}
 	}
 
 	private void setDragEvents () {

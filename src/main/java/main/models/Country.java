@@ -1,10 +1,11 @@
 package main.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-public class Country {
+public class Country implements Serializable {
 	private int countryId;
 	private String title;
 	private Set<State> states;

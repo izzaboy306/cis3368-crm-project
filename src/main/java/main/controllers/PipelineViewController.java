@@ -7,9 +7,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import main.models.OrderStatus;
 import main.models.User;
+import main.models.UserType;
 import main.models.builders.OrderBuilder;
 import main.repositories.OrderRepository;
 import main.repositories.UserRepository;
+import main.services.ActiveUserService;
 import main.view.StageManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -18,20 +20,22 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class SalesPipelineViewController implements FxmlController {
+public class PipelineViewController implements FxmlController {
 	private final StageManager stageManager;
 
 	@FXML private TextField txtNewLeadField;
 	@FXML private ComboBox<User> menuEmployeeList;
-	@FXML private SalesPipelineController salesPipelineController;
+	@FXML private PipelineController pipelineController;
 
 	@Autowired private UserRepository userRepository;
 	@Autowired private OrderRepository orderRepository;
 	@Autowired private List<OrderStatus> orderStatuses;
+	@Autowired private ActiveUserService activeUserService;
+	@Autowired private List<UserType> userTypes;
 
 	@Autowired
 	@Lazy
-	public SalesPipelineViewController (StageManager stageManager) {
+	public PipelineViewController (StageManager stageManager) {
 		this.stageManager = stageManager;
 	}
 
@@ -44,7 +48,7 @@ public class SalesPipelineViewController implements FxmlController {
 	 */
 	@Override
 	public void initialize () {
-		menuEmployeeList.setItems(FXCollections.observableList(userRepository.findAll()));
+		menuEmployeeList.setItems(FXCollections.observableList(userRepository.findAllByUserTypeEquals(userTypes.get(0))));
 	}
 
 	public void createNewProspect () {
@@ -52,8 +56,9 @@ public class SalesPipelineViewController implements FxmlController {
 				.setOrderStatus(orderStatuses.get(0))
 				.setUser(menuEmployeeList.getSelectionModel().getSelectedItem())
 				.createOrder());
+		activeUserService.setActiveUser(menuEmployeeList.getSelectionModel().getSelectedItem());
 		txtNewLeadField.clear();
 		menuEmployeeList.getSelectionModel().clearSelection();
-		salesPipelineController.updatePipeline();
+		pipelineController.updatePipeline();
 	}
 }

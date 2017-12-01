@@ -16,8 +16,7 @@ public class Order implements Serializable {
 	public Order () {
 	}
 
-	public Order (int orderId, String title, OrderStatus orderStatus, OrderType orderType, State state, User user) {
-		this.orderId = orderId;
+	public Order (String title, OrderStatus orderStatus, OrderType orderType, State state, User user) {
 		this.title = title;
 		this.orderStatus = orderStatus;
 		this.orderType = orderType;
