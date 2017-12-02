@@ -2,10 +2,8 @@ package main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import main.models.OrderStatus;
-import main.models.UserType;
-import main.repositories.OrderStatusRepository;
-import main.repositories.UserTypeRepository;
+import main.models.*;
+import main.repositories.*;
 import main.view.FxmlView;
 import main.view.StageManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,9 @@ public class Main extends Application {
 
 	@Autowired private OrderStatusRepository orderStatusRepository;
 	@Autowired private UserTypeRepository userTypeRepository;
+	@Autowired private CountryRepository countryRepository;
+	@Autowired private StateRepository stateRepository;
+	@Autowired private CustomerTypeRepository customerTypeRepository;
 
 	public static void main (String[] args) {
 		launch();
@@ -101,5 +102,20 @@ public class Main extends Application {
 	@Bean
 	public List<UserType> userTypes () {
 		return userTypeRepository.findAll();
+	}
+
+	@Bean
+	public List<Country> countries () {
+		return countryRepository.findAll();
+	}
+
+	@Bean
+	public List<State> states () {
+		return stateRepository.findAll();
+	}
+
+	@Bean
+	public List<CustomerType> customerTypes () {
+		return customerTypeRepository.findAll();
 	}
 }

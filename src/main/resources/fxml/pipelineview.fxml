@@ -5,33 +5,24 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="main.controllers.PipelineViewController">
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.PipelineViewController">
     <top>
-        <fx:include fx:id="navbar" source="navbar.fxml"/>
+        <fx:include fx:id="navbar" source="navbar.fxml" />
     </top>
     <center>
-        <fx:include fx:id="pipeline" source="pipeline.fxml"/>
+        <fx:include fx:id="pipeline" source="pipeline.fxml" />
     </center>
     <bottom>
         <ButtonBar prefHeight="40.0" BorderPane.alignment="CENTER">
             <buttons>
-                <TextField fx:id="txtNewLeadField" promptText="Start a lead.."/>
-                <ComboBox fx:id="menuEmployeeList" prefWidth="150.0" promptText="Assign Employee.."/>
-                <Button mnemonicParsing="false" onAction="#createNewProspect" text="Add New Prospect"/>
+                <ComboBox fx:id="menuEmployeeList" prefWidth="150.0" promptText="Assign Employee.." visible="false" />
+                <TextField fx:id="txtNewLeadField" promptText="Start a lead.." />
+                <Button mnemonicParsing="false" onAction="#createNewProspect" text="Add New Prospect" />
             </buttons>
             <BorderPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </BorderPane.margin>
         </ButtonBar>
     </bottom>
-    <right>
-        <VBox prefWidth="250.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
-            <BorderPane.margin>
-                <Insets bottom="10.0" right="10.0" top="10.0"/>
-            </BorderPane.margin>
-        </VBox>
-    </right>
 </BorderPane>

@@ -7,6 +7,19 @@ INSERT INTO order_status (title) VALUES ('Closing');
 INSERT INTO user_type (title) VALUES ('User');
 INSERT INTO user_type (title) VALUES ('Manager');
 
+INSERT INTO product_status (title) VALUES ('Available');
+INSERT INTO product_status (title) VALUES ('Unavailable');
+
+INSERT INTO product_type (title) VALUES ('Small');
+INSERT INTO product_type (title) VALUES ('Medium');
+INSERT INTO product_type (title) VALUES ('Large');
+
+INSERT INTO customer_type (title) VALUES ('Health Care');
+INSERT INTO customer_type (title) VALUES ('Oil & Gas');
+INSERT INTO customer_type (title) VALUES ('Education');
+INSERT INTO customer_type (title) VALUES ('Government');
+INSERT INTO customer_type (title) VALUES ('Information Technology');
+
 INSERT INTO "user" (first_name, last_name, user_type_id) VALUES ('Ethan', 'Orcutt', 2);
 INSERT INTO "user" (first_name, last_name, user_type_id) VALUES ('Clay', 'Orcutt', 1);
 INSERT INTO "user" (first_name, last_name, user_type_id) VALUES ('Tony', 'Orcutt', 1);

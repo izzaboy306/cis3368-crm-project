@@ -48,17 +48,28 @@ public class PipelineViewController implements FxmlController {
 	 */
 	@Override
 	public void initialize () {
-		menuEmployeeList.setItems(FXCollections.observableList(userRepository.findAllByUserTypeEquals(userTypes.get(0))));
+		if (activeUserService.getActiveUser().getUserType().equals(userTypes.get(1))) {
+			menuEmployeeList.setItems(FXCollections.observableList(userRepository.findAllByUserTypeEquals(userTypes.get(0))));
+			menuEmployeeList.setVisible(true);
+		}
 	}
 
 	public void createNewProspect () {
-		orderRepository.save(new OrderBuilder().setTitle(txtNewLeadField.getText())
-				.setOrderStatus(orderStatuses.get(0))
-				.setUser(menuEmployeeList.getSelectionModel().getSelectedItem())
-				.createOrder());
-		activeUserService.setActiveUser(menuEmployeeList.getSelectionModel().getSelectedItem());
-		txtNewLeadField.clear();
-		menuEmployeeList.getSelectionModel().clearSelection();
+		if (activeUserService.getActiveUser().getUserType().equals(userTypes.get(1))) {
+			orderRepository.save(new OrderBuilder().setTitle(txtNewLeadField.getText())
+					.setOrderStatus(orderStatuses.get(0))
+					.setUser(menuEmployeeList.getSelectionModel().getSelectedItem())
+					.createOrder());
+			txtNewLeadField.clear();
+			menuEmployeeList.getSelectionModel().clearSelection();
+			pipelineController.updatePipeline();
+		} else {
+			orderRepository.save(new OrderBuilder().setTitle(txtNewLeadField.getText())
+					.setOrderStatus(orderStatuses.get(0))
+					.setUser(activeUserService.getActiveUser())
+					.createOrder());
+			txtNewLeadField.clear();
+		}
 		pipelineController.updatePipeline();
 	}
 }

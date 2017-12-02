@@ -24,3 +24,7 @@ VBox {
 #closing-vbox {
     -fx-background-color: burlywood;
 }
+
+#details-box {
+    -fx-background-color: lightgrey;
+}

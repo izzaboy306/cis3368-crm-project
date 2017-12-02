@@ -10,9 +10,14 @@ public class User implements Serializable {
 	private int userId;
 	private String firstName;
 	private String lastName;
-	private UserStatus userStatus;
 	private UserType userType;
 	private Set<Order> orders;
+	private String phoneNumber;
+	private String emailAddress;
+	private String addressOne;
+	private String addressTwo;
+	private String city;
+	private String postalZipCode;
 
 	public User () {
 	}
@@ -22,10 +27,9 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public User (String firstName, String lastName, UserStatus userStatus, UserType userType, Set<Order> orders) {
+	public User (String firstName, String lastName, UserType userType, Set<Order> orders) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.userStatus = userStatus;
 		this.userType = userType;
 		this.orders = orders;
 	}
@@ -37,16 +41,6 @@ public class User implements Serializable {
 
 	public void setOrders (Set<Order> orders) {
 		this.orders = orders;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "user_status_id")
-	public UserStatus getUserStatus () {
-		return userStatus;
-	}
-
-	public void setUserStatus (UserStatus userStatus) {
-		this.userStatus = userStatus;
 	}
 
 	@ManyToOne

@@ -24,7 +24,6 @@ public class OrderStatus implements Serializable {
 		return orders;
 	}
 
-
 	public void setOrders (Set<Order> orders) {
 		this.orders = orders;
 	}
@@ -69,4 +68,8 @@ public class OrderStatus implements Serializable {
 		return result;
 	}
 
+	@Override
+	public String toString () {
+		return getTitle();
+	}
 }

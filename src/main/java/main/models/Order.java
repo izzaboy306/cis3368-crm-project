@@ -9,18 +9,14 @@ public class Order implements Serializable {
 	private int orderId;
 	private String title;
 	private OrderStatus orderStatus;
-	private OrderType orderType;
-	private State state;
 	private User user;
 
 	public Order () {
 	}
 
-	public Order (String title, OrderStatus orderStatus, OrderType orderType, State state, User user) {
+	public Order (String title, OrderStatus orderStatus, User user) {
 		this.title = title;
 		this.orderStatus = orderStatus;
-		this.orderType = orderType;
-		this.state = state;
 		this.user = user;
 	}
 
@@ -63,26 +59,6 @@ public class Order implements Serializable {
 
 	public void setOrderStatus (OrderStatus orderStatus) {
 		this.orderStatus = orderStatus;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "order_type_id")
-	public OrderType getOrderType () {
-		return orderType;
-	}
-
-	public void setOrderType (OrderType orderType) {
-		this.orderType = orderType;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "state_id")
-	public State getState () {
-		return state;
-	}
-
-	public void setState (State state) {
-		this.state = state;
 	}
 
 	@Override

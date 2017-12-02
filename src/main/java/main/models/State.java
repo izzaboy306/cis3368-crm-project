@@ -2,7 +2,6 @@ package main.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 public class State implements Serializable {
@@ -10,16 +9,6 @@ public class State implements Serializable {
 	private String title;
 	private String abbreviation;
 	private Country country;
-	private Set<Order> orders;
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "state", cascade = CascadeType.ALL)
-	public Set<Order> getOrders () {
-		return orders;
-	}
-
-	public void setOrders (Set<Order> orders) {
-		this.orders = orders;
-	}
 
 	@Id
 	@Column(name = "state_id", nullable = false)
