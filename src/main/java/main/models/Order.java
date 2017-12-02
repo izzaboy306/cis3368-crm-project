@@ -2,6 +2,7 @@ package main.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "order", schema = "public", catalog = "salesfarce")
@@ -10,6 +11,8 @@ public class Order implements Serializable {
 	private String title;
 	private OrderStatus orderStatus;
 	private User user;
+	private Set<OrderNote> orderNotes;
+	private double total;
 
 	public Order () {
 	}
@@ -18,6 +21,15 @@ public class Order implements Serializable {
 		this.title = title;
 		this.orderStatus = orderStatus;
 		this.user = user;
+	}
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL)
+	public Set<OrderNote> getOrderNotes () {
+		return orderNotes;
+	}
+
+	public void setOrderNotes (Set<OrderNote> orderNotes) {
+		this.orderNotes = orderNotes;
 	}
 
 	@Id

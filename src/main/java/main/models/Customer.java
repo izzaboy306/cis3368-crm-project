@@ -1,12 +1,10 @@
 package main.models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "customer", schema = "public", catalog = "salesfarce")
 public class Customer {
 	private int customerId;
 	private String firstName;

@@ -42,6 +42,7 @@ CREATE TABLE product
   title             VARCHAR(40),
   product_status_id INTEGER,
   product_type_id   INTEGER,
+  price             NUMERIC(8, 2),
   CONSTRAINT fk_product_product_status
   FOREIGN KEY (product_status_id)
   REFERENCES product_status (product_status_id),
@@ -112,6 +113,7 @@ CREATE TABLE "order"
   order_status_id INTEGER,
   user_id         INTEGER,
   customer_id     INTEGER,
+  total           NUMERIC(8, 2),
   CONSTRAINT fk_order_order_status
   FOREIGN KEY (order_status_id)
   REFERENCES order_status (order_status_id),
@@ -126,8 +128,10 @@ CREATE TABLE "order"
 -- Wave Five
 CREATE TABLE order_line
 (
-  order_id   INTEGER,
-  product_id INTEGER,
+  order_id         INTEGER,
+  product_id       INTEGER,
+  product_quantity INTEGER,
+  total            INTEGER,
   CONSTRAINT pk_order_line
   PRIMARY KEY (order_id, product_id),
   CONSTRAINT fk_order_line_order
@@ -141,8 +145,10 @@ CREATE TABLE order_line
 CREATE TABLE order_note
 (
   order_note_id SERIAL PRIMARY KEY,
+  title         VARCHAR(40),
   message       TEXT,
   order_id      INTEGER,
+  created_at    TIMESTAMP DEFAULT NOW(),
   CONSTRAINT fk_order_note_order
   FOREIGN KEY (order_id)
   REFERENCES "order" (order_id)

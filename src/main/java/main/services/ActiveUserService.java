@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 public class ActiveUserService {
 	private User activeUser;
 
-	public void setActiveUser (User activeUser) {
-		this.activeUser = activeUser;
-	}
-
 	public User getActiveUser () {
 		return activeUser;
+	}
+
+	public void setActiveUser (User activeUser) {
+		this.activeUser = activeUser;
 	}
 }

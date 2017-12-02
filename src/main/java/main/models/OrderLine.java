@@ -9,6 +9,8 @@ import java.io.Serializable;
 public class OrderLine implements Serializable {
 	private int orderId;
 	private int productId;
+	private int productQuantity;
+	private double total;
 
 	@Id
 	@Column(name = "order_id", nullable = false)

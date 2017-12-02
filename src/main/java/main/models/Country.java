@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
+@Table(name = "country", schema = "public", catalog = "salesfarce")
 public class Country implements Serializable {
 	private int countryId;
 	private String title;

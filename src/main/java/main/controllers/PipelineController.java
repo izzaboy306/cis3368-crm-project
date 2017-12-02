@@ -1,5 +1,7 @@
 package main.controllers;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,14 +14,24 @@ import main.models.User;
 import main.models.UserType;
 import main.repositories.OrderRepository;
 import main.repositories.UserRepository;
+import main.services.ActiveOrderService;
 import main.services.ActiveUserService;
+import main.view.FxmlView;
+import main.view.StageManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class PipelineController implements FxmlController {
+	private final StageManager stageManager;
+	private final DataFormat custom_order_format = new DataFormat("A sales order for the salesman.");
+	private Order selectedOrder;
+	private ListView<Order> selectedList;
+	private ListView[] listViewList;
+
 	@FXML private ListView<Order> prospectList;
 	@FXML private ListView<Order> infoList;
 	@FXML private ListView<Order> proposalList;
@@ -39,11 +51,13 @@ public class PipelineController implements FxmlController {
 	@Autowired private List<OrderStatus> orderStatuses;
 	@Autowired private List<UserType> userTypes;
 	@Autowired private ActiveUserService activeUserService;
+	@Autowired private ActiveOrderService activeOrderService;
 
-	private final DataFormat custom_order_format = new DataFormat("A sales order for the salesman.");
-	private Order selectedOrder;
-	private ListView selectedList;
-	private ListView[] listViewList;
+	@Autowired
+	@Lazy
+	public PipelineController (StageManager stageManager) {
+		this.stageManager = stageManager;
+	}
 
 	/**
 	 * Called by the {@link FXMLLoader} to initialize a controller after its
@@ -69,30 +83,53 @@ public class PipelineController implements FxmlController {
 	protected void updatePipeline () {
 		User activeUser = activeUserService.getActiveUser();
 
-		prospectList.getItems().clear();
-		infoList.getItems().clear();
-		proposalList.getItems().clear();
-		negotiationList.getItems().clear();
-		closingList.getItems().clear();
+		for (ListView listView : listViewList)
+			listView.getItems().clear();
 
 		if (activeUser.getUserType().equals(userTypes.get(0))) {
-			prospectList.setItems(FXCollections.observableList(orderRepository
-					.findByOrderStatusAndUser(orderStatuses.get(0), activeUser)));
-			infoList.setItems(FXCollections.observableList(orderRepository
-					.findByOrderStatusAndUser(orderStatuses.get(1), activeUser)));
-			proposalList.setItems(FXCollections.observableList(orderRepository
-					.findByOrderStatusAndUser(orderStatuses.get(2), activeUser)));
-			negotiationList.setItems(FXCollections.observableList(orderRepository
-					.findByOrderStatusAndUser(orderStatuses.get(3), activeUser)));
-			closingList.setItems(FXCollections.observableList(orderRepository
-					.findByOrderStatusAndUser(orderStatuses.get(4), activeUser)));
-
+			for (int x = 0; x <= 4; x++)
+				listViewList[x].setItems(FXCollections.observableList(orderRepository.findByOrderStatusAndUser(orderStatuses.get(x), activeUser)));
 		} else {
-			prospectList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(0))));
-			infoList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(1))));
-			proposalList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(2))));
-			negotiationList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(3))));
-			closingList.setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(4))));
+			for (int x = 0; x <= 4; x++)
+				listViewList[x].setItems(FXCollections.observableList(orderRepository.findByOrderStatus(orderStatuses.get(x))));
+		}
+
+		for (ListView listView : listViewList) {
+			listView.setCellFactory(lv -> {
+				ListCell<Order> cell = new ListCell<>();
+				ContextMenu contextMenu = new ContextMenu();
+
+				MenuItem addNote = new MenuItem();
+				addNote.textProperty().bind(Bindings.format("View Notes", cell.itemProperty()));
+				addNote.setOnAction(event -> {
+					activeOrderService.setActiveOrder(cell.getItem());
+					stageManager.switchScene(FxmlView.ORDERNOTES);
+				});
+
+				contextMenu.getItems().addAll(addNote);
+				StringBinding stringBinding = new StringBinding() {
+					{
+						super.bind(cell.itemProperty().asString());
+					}
+
+					@Override
+					protected String computeValue () {
+						if (cell.itemProperty().getValue() == null) {
+							return "";
+						}
+						return cell.itemProperty().getValue().toString();
+					}
+				};
+				cell.textProperty().bind(stringBinding);
+				cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+					if (isNowEmpty) {
+						cell.setContextMenu(null);
+					} else {
+						cell.setContextMenu(contextMenu);
+					}
+				});
+				return cell;
+			});
 		}
 	}
 
@@ -168,7 +205,6 @@ public class PipelineController implements FxmlController {
 				selectedOrder.setOrderStatus(orderStatuses.get(0));
 				break;
 			case INFOLIST:
-
 				selectedOrder.setOrderStatus(orderStatuses.get(1));
 				break;
 			case PROPOSALLIST:
@@ -196,7 +232,9 @@ public class PipelineController implements FxmlController {
 	}
 
 	public void saveDetails () {
+		selectedOrder.setTitle(txtOrderTitle.getText());
 		selectedOrder.setOrderStatus(menuOrderStatus.getSelectionModel().getSelectedItem());
+		selectedOrder.setUser(menuAssignedEmployee.getSelectionModel().getSelectedItem());
 		orderRepository.save(selectedOrder);
 		selectedOrder = null;
 

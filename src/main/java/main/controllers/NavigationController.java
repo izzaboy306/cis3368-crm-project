@@ -14,8 +14,9 @@ import org.springframework.stereotype.Component;
 public class NavigationController implements FxmlController {
 	private final StageManager stageManager;
 
-	@FXML private MenuItem exitMenuItem;
 	@FXML private MenuItem homeMenuItem;
+	@FXML private MenuItem logoutMenuItem;
+	@FXML private MenuItem exitMenuItem;
 
 	@Autowired
 	@Lazy
@@ -32,7 +33,8 @@ public class NavigationController implements FxmlController {
 	 */
 	@Override
 	public void initialize () {
-		homeMenuItem.setOnAction(event -> stageManager.switchScene(FxmlView.MAIN));
+		homeMenuItem.setOnAction(event -> stageManager.switchScene(FxmlView.SALESPIPELINE));
+		logoutMenuItem.setOnAction(event -> stageManager.switchScene(FxmlView.MAIN));
 		exitMenuItem.setOnAction(event -> Platform.exit());
 	}
 }

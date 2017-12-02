@@ -24,6 +24,16 @@ public enum FxmlView {
         String getFxmlFile() {
             return "/fxml/pipelineview.fxml";
         }
+    }, ORDERNOTES {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("ordernotes.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/ordernotes.fxml";
+        }
     };
     
     abstract String getTitle();

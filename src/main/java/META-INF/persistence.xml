@@ -3,24 +3,18 @@
 
     <persistence-unit name="NewPersistenceUnit">
         <class>main.models.User</class>
-        <class>main.models.UserStatus</class>
         <class>main.models.Country</class>
         <class>main.models.Order</class>
         <class>main.models.OrderLine</class>
         <class>main.models.OrderNote</class>
         <class>main.models.OrderStatus</class>
-        <class>main.models.OrderType</class>
         <class>main.models.Product</class>
         <class>main.models.ProductStatus</class>
         <class>main.models.ProductType</class>
         <class>main.models.State</class>
         <class>main.models.UserType</class>
-        <class>main.Country</class>
         <class>main.models.Customer</class>
         <class>main.models.CustomerType</class>
-        <class>main.Product</class>
-        <class>main.ProductStatus</class>
-        <class>main.ProductType</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/salesfarce"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

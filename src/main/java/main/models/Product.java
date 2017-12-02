@@ -1,17 +1,16 @@
 package main.models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "product", schema = "public", catalog = "salesfarce")
 public class Product implements Serializable {
 	private int productId;
 	private String title;
 	private int productStatusId;
 	private int productTypeId;
+	private double price;
 
 	@Id
 	@Column(name = "product_id", nullable = false)

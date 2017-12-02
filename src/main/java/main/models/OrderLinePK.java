@@ -7,6 +7,8 @@ import java.io.Serializable;
 public class OrderLinePK implements Serializable {
 	private int orderId;
 	private int productId;
+	private int productQuantity;
+	private double total;
 
 	@Column(name = "order_id", nullable = false)
 	@Id
